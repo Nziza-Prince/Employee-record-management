@@ -1,12 +1,12 @@
 'use client'
 import React, { useState } from "react";
-
-import { MdAlternateEmail } from "react-icons/md";
-import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import Link from "next/link"; 
+import { LuUser } from "react-icons/lu"; // Ensure this import is correct
+import { MdAlternateEmail } from "react-icons/md"; // Ensure this import is correct
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5"; // Ensure this import is correct
+import Link from "next/link"; // Corrected import for Next.js Link
 
 const Page = () => {
-  const [showPassword, setShowPassword] = useState(false); 
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -27,17 +27,32 @@ const Page = () => {
 
       {/* Right Form Section */}
       <div className="w-1/2 flex flex-col justify-center items-center px-16 bg-gray-10">
-        <h1 className="text-left text-2xl font-bold">Login into your account</h1>
+        <h1 className="text-left text-2xl font-bold">Create your free account</h1>
         <p className="mt-2 text-gray-600 text-left">
-          Dont have an account?{" "}
+          Already registered?{" "}
           <span className="text-green-500 cursor-pointer">
-            <Link href="/login">Signup</Link>
+            <Link href="/login">Signin</Link>
           </span>
         </p>
 
         {/* Form */}
         <div className="shadow-md p-10 mt-6 w-full max-w-md">
-
+          <div className="flex gap-10">
+            <div className="w-1/2">
+              <label className="block text-gray-700">First Name</label>
+              <div className="flex border-b border-gray-300">
+                <input type="text" className="w-full p-2 focus:outline-none" />
+                <LuUser className="mt-3" />
+              </div>
+            </div>
+            <div className="w-1/2">
+              <label className="block text-gray-700">Last Name</label>
+              <div className="flex border-b border-gray-300">
+                <input type="text" className="w-full p-2 focus:outline-none" />
+                <LuUser className="mt-3" />
+              </div>
+            </div>
+          </div>
           <div className="mt-4">
             <label className="block text-gray-700">Email</label>
             <div className="flex border-b border-gray-300">
@@ -49,7 +64,7 @@ const Page = () => {
             <label className="block text-gray-700">Password</label>
             <div className="flex border-b border-gray-300">
               <input
-                type={showPassword ? "text" : "password"} 
+                type={showPassword ? "text" : "password"} // Toggle input type
                 className="h-10 w-full p-2 focus:outline-none"
               />
               <button
@@ -66,7 +81,7 @@ const Page = () => {
             </div>
           </div>
           <button className="w-full mt-6 bg-green-500 text-white p-3 rounded-md hover:bg-green-600 transition">
-            Signin
+            Continue
           </button>
         </div>
 
@@ -80,4 +95,4 @@ const Page = () => {
   );
 };
 
-export default Page; 
+export default Page; // Ensure this is the default export
