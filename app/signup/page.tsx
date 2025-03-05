@@ -1,15 +1,47 @@
 'use client'
 import React, { useState } from "react";
-import { LuUser } from "react-icons/lu"; // Ensure this import is correct
-import { MdAlternateEmail } from "react-icons/md"; // Ensure this import is correct
-import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5"; // Ensure this import is correct
-import Link from "next/link"; // Corrected import for Next.js Link
+import { LuUser } from "react-icons/lu";
+import { MdAlternateEmail } from "react-icons/md";
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema, RegisterFormData } from "@/lib/schemas";
+import axios from "axios";
 
 const Page = () => {
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
+  });
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
+    try {
+      const response = await axios.post("/api/auth/signup", {
+        firstname: data.firstName,
+        lastname:data.lastName,
+        email: data.email,
+        password: data.password,
+      });
+
+      if (response.status === 201) {
+        router.push("/login");
+      }
+    } catch (error) {
+      alert("Registration failed");
+      console.error(error);
+    }
   };
 
   return (
@@ -36,36 +68,56 @@ const Page = () => {
         </p>
 
         {/* Form */}
-        <div className="shadow-md p-10 mt-6 w-full max-w-md">
+        <form onSubmit={handleSubmit(onSubmit)} className="shadow-md p-10 mt-6 w-full max-w-md">
           <div className="flex gap-10">
             <div className="w-1/2">
               <label className="block text-gray-700">First Name</label>
               <div className="flex border-b border-gray-300">
-                <input type="text" className="w-full p-2 focus:outline-none" />
+                <input
+                  type="text"
+                  className="w-full p-2 focus:outline-none"
+                  {...register("firstName")}
+                />
                 <LuUser className="mt-3" />
               </div>
+              {errors.firstName && (
+                <p className="text-red-500 text-sm">{errors.firstName.message}</p>
+              )}
             </div>
             <div className="w-1/2">
               <label className="block text-gray-700">Last Name</label>
               <div className="flex border-b border-gray-300">
-                <input type="text" className="w-full p-2 focus:outline-none" />
+                <input
+                  type="text"
+                  className="w-full p-2 focus:outline-none"
+                  {...register("lastName")}
+                />
                 <LuUser className="mt-3" />
               </div>
+              {errors.lastName && (
+                <p className="text-red-500 text-sm">{errors.lastName.message}</p>
+              )}
             </div>
           </div>
           <div className="mt-4">
             <label className="block text-gray-700">Email</label>
             <div className="flex border-b border-gray-300">
-              <input type="text" className="h-10 indent-0 w-full p-2 focus:outline-none" />
+              <input
+                type="text"
+                className="h-10 indent-0 w-full p-2 focus:outline-none"
+                {...register("email")}
+              />
               <MdAlternateEmail className="mt-3" />
             </div>
+            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
           </div>
           <div className="mt-4">
             <label className="block text-gray-700">Password</label>
             <div className="flex border-b border-gray-300">
               <input
-                type={showPassword ? "text" : "password"} // Toggle input type
+                type={showPassword ? "text" : "password"}
                 className="h-10 w-full p-2 focus:outline-none"
+                {...register("password")}
               />
               <button
                 onClick={togglePasswordVisibility}
@@ -79,11 +131,17 @@ const Page = () => {
                 )}
               </button>
             </div>
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
+            )}
           </div>
-          <button className="w-full mt-6 bg-green-500 text-white p-3 rounded-md hover:bg-green-600 transition">
+          <button
+            type="submit"
+            className="w-full mt-6 bg-green-500 text-white p-3 rounded-md hover:bg-green-600 transition"
+          >
             Continue
           </button>
-        </div>
+        </form>
 
         <p className="mt-4 text-gray-600 text-sm right-10">
           By signing up, you agree to our{" "}
@@ -95,4 +153,4 @@ const Page = () => {
   );
 };
 
-export default Page; // Ensure this is the default export
+export default Page;
