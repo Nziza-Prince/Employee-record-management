@@ -5,7 +5,6 @@ import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, LoginFormData } from "@/lib/schemas";
 import axios from "axios";
 import { signIn } from "next-auth/react";
 

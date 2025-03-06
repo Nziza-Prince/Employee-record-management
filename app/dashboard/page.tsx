@@ -1,16 +1,20 @@
-"use client";
-import { useSession } from "next-auth/react";
+import React from 'react';
+import Navbar from './Navbar';
+import Sidebar from './Sidebar';
+import Hero from './Hero';
 
-const Dashboard = () => {
-    const { data: session } = useSession();
 
-    if (session) {
-      return (
-        <div>
-        
+
+export default async function Dashboard() {
+  return (
+    <div className="bg-gray-100 flex flex-col h-screen">
+      <Navbar />
+      <div className="flex flex-1">
+        <Sidebar />
+        <div className="flex-1 p-4">
+         <Hero/>
         </div>
-      );
-    }
-};
-
-export default Dashboard;
+      </div>
+    </div>
+  );
+}
