@@ -12,36 +12,12 @@ import { signIn } from "next-auth/react";
 const Page = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
-  });
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
-    try {
-      const result = await signIn("credentials", {
-        redirect: false,
-        email: data.email,
-        password: data.password,
-      });
-
-      if (result?.error) {
-        alert(result.error);
-      } else {
-        window.location.href = "/dashboard";
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Login failed");
-    }
-  };
 
   return (
     <div className="flex h-screen">
@@ -67,18 +43,18 @@ const Page = () => {
         </p>
 
         {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="shadow-md p-10 mt-6 w-full max-w-md">
+        <form  className="shadow-md p-10 mt-6 w-full max-w-md">
           <div className="mt-4">
             <label className="block text-gray-700">Email</label>
             <div className="flex border-b border-gray-300">
               <input
                 type="text"
                 className="h-10 indent-0 w-full p-2 focus:outline-none"
-                {...register("email")}
+               
               />
               <MdAlternateEmail className="mt-3" />
             </div>
-            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+          
           </div>
           <div className="mt-4">
             <label className="block text-gray-700">Password</label>
@@ -86,7 +62,7 @@ const Page = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 className="h-10 w-full p-2 focus:outline-none"
-                {...register("password")}
+              
               />
               <button
                 onClick={togglePasswordVisibility}
@@ -100,9 +76,7 @@ const Page = () => {
                 )}
               </button>
             </div>
-            {errors.password && (
-              <p className="text-red-500 text-sm">{errors.password.message}</p>
-            )}
+          
           </div>
           <button
             type="submit"

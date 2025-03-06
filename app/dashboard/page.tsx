@@ -1,11 +1,16 @@
-import React from 'react'
+"use client";
+import { useSession } from "next-auth/react";
 
-const page = () => {
-  return (
-    <div>
-      Dashboard
-    </div>
-  )
-}
+const Dashboard = () => {
+    const { data: session } = useSession();
 
-export default page
+    if (session) {
+      return (
+        <div>
+        
+        </div>
+      );
+    }
+};
+
+export default Dashboard;
