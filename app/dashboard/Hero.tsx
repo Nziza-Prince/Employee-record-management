@@ -3,9 +3,10 @@ import { Table } from "@radix-ui/themes";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
-import { FaPen } from "react-icons/fa";
+
 import AddNewDialog from "./AddNewDialog";
 import DeleteComponent from "./DeleteComponent";
+import UpdateComponent from "./UpdateComponent";
 interface Record{
   _id:string
   firstname:string
@@ -103,7 +104,7 @@ useEffect(() => {
 			<Table.Cell>{record.role}</Table.Cell>
 			<Table.Cell className="flex gap-5">
         <DeleteComponent id={record._id} isDeleting={setDeleteLoading} onDeleteSuccess={handleDeleteSuccess}/>
-        <FaPen className="cursor-pointer"/>
+        <UpdateComponent setRecords={setRecords} id={record._id}/>
     </Table.Cell>
       </Table.Row>
 

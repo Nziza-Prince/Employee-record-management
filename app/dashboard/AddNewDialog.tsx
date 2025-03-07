@@ -32,6 +32,8 @@ const [emailError,setEmailError] = useState(null)
     formState: { errors, isSubmitting },
   } = form;
 
+  
+
   const onSubmitForm: SubmitHandler<RecordSchema> = async (
     data: RecordSchema
   ) => {
@@ -43,10 +45,6 @@ const [emailError,setEmailError] = useState(null)
       if (!response) {
         throw new Error("Failed to submit the form");
       }
-      const newdata = response.data.data
-      const newRecord = newdata
-      console.log("new Record",newRecord)
-
       setRecords((prevRecords: RecordSchema[]) => [...prevRecords,response.data.data,]);
       setOpen(false)
       reset()
