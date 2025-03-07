@@ -42,10 +42,8 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
   await dbConnect();
   try {
     const deleteRecord = await Record.findByIdAndDelete(params.id);
-    if (!deleteRecord) {
-      return NextResponse.json({ success: false, error: 'Record not Found' }, { status: 400 });
-    }
-    return NextResponse.json({ success: true, data: {} });
+
+    return NextResponse.json({ success: true, data: deleteRecord });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 400 });
   }

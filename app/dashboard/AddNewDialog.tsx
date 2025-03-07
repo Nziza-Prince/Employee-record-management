@@ -15,7 +15,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useState } from "react";
 
-export function AddNewDialog() {
+export function AddNewDialog({setRecords}:{setRecords:Function}) {
+const [open,setOpen] = useState(false)
+
   const form = useForm<RecordSchema>({
     resolver: zodResolver(recordSchema),
     defaultValues: { role: "STAFF" },
@@ -25,6 +27,7 @@ export function AddNewDialog() {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors, isSubmitting },
   } = form;
 
@@ -39,14 +42,19 @@ export function AddNewDialog() {
       if (!response) {
         throw new Error("Failed to submit the form");
       }
-      const responseData = response.data;
-      console.log(responseData);
+      const newdata = response.data.data
+      const newRecord = newdata
+      console.log("new Record",newRecord)
+
+      setRecords((prevRecords: RecordSchema[]) => [...prevRecords,response.data.data,]);
+      setOpen(false)
+      reset()
     } catch (error) {
       console.error(error);
     }
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <button className="bg-[#2BDA53] text-center px-10 py-2 text-white rounded hover:bg-green-600 transition-colors cursor-pointer">
           Add New

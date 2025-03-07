@@ -3,19 +3,9 @@ import { Table } from "@radix-ui/themes";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
-import { FaRegTrashAlt } from "react-icons/fa";
 import { FaPen } from "react-icons/fa";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 import AddNewDialog from "./AddNewDialog";
-
-
+import DeleteComponent from "./DeleteComponent";
 interface Record{
   _id:string
   firstname:string
@@ -27,7 +17,8 @@ interface Record{
 
 const Hero = () => {
   const [records,setRecords] = useState<Record[]>([])
-   
+  const [deleteLoading,setDeleteLoading] = useState(false) 
+
   useEffect(()=>{
     const fetchRecords = async ()=>{
       try{
@@ -43,11 +34,21 @@ const Hero = () => {
 
     fetchRecords()
   },[])
+  
+const handleDeleteSuccess = (deletedId:string)=>{
+  setRecords(prevRecords=>prevRecords.filter(record=>record._id !==deletedId))
+  
+}
+useEffect(() => {
+  console.log("Updated Records:", records);
+}, [records]); // Runs every time `records` changes
+
+
   return (
     <div className="py-24 px-16 h-screen">
       <div className="flex justify-between mb-24">
         <h1 className="text-[#013C61] text-3xl font-semibold">Employees</h1>
-        <AddNewDialog/>
+        <AddNewDialog setRecords={setRecords}/>
       </div>
 
       <div className="bg-white flex justify-between px-8 py-10 mb-12 rounded-lg shadow">
@@ -101,7 +102,7 @@ const Hero = () => {
 			<Table.Cell>{record.phone}</Table.Cell>
 			<Table.Cell>{record.role}</Table.Cell>
 			<Table.Cell className="flex gap-5">
-        <FaRegTrashAlt className="cursor-pointer"/> 
+        <DeleteComponent id={record._id} isDeleting={setDeleteLoading} onDeleteSuccess={handleDeleteSuccess}/>
         <FaPen className="cursor-pointer"/>
     </Table.Cell>
       </Table.Row>
@@ -111,7 +112,11 @@ const Hero = () => {
 </Table.Root>
   
   </div>
-  
+  {deleteLoading && (
+        <div className="fixed top-0 left-0 w-full bg-gray-700 text-white text-center p-3">
+          Deleting record... Please wait.
+        </div>
+      )}
 
 </div>
      
