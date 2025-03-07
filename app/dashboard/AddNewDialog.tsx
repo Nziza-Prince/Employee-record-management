@@ -17,6 +17,7 @@ import { useState } from "react";
 
 export function AddNewDialog({setRecords}:{setRecords:Function}) {
 const [open,setOpen] = useState(false)
+const [emailError,setEmailError] = useState(null)
 
   const form = useForm<RecordSchema>({
     resolver: zodResolver(recordSchema),
@@ -49,7 +50,11 @@ const [open,setOpen] = useState(false)
       setRecords((prevRecords: RecordSchema[]) => [...prevRecords,response.data.data,]);
       setOpen(false)
       reset()
-    } catch (error) {
+      setEmailError(null)
+    } catch (error:any) {
+      if(error.response && error.response.status===400 && error.response.data.error === "Record Already exists"){
+       setEmailError(error.response.data.error)
+      }
       console.error(error);
     }
   };
@@ -101,6 +106,9 @@ const [open,setOpen] = useState(false)
             />
             <p className="text-red-600">
               {errors.email && errors.email.message}
+            </p>
+            <p className="text-red-600">
+              {emailError && emailError}
             </p>
           </div>
           <div className="flex flex-col">

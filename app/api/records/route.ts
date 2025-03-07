@@ -16,6 +16,12 @@ export async function POST(req: NextRequest) {
   await dbConnect();
   try {
     const body = await req.json();
+
+    const existingUser = await Record.findOne({email:body.email})
+    
+    if(existingUser){
+      return NextResponse.json({success:false,error:"Record Already exists"},{status:400})
+    }
     const record = await Record.create(body);
     return NextResponse.json({ success: true, data: record }, { status: 201 });
   } catch (error: any) {
