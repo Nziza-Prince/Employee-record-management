@@ -5,10 +5,20 @@ import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaPen } from "react-icons/fa";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import AddNewDialog from "./AddNewDialog";
+
 
 interface Record{
   _id:string
-  firsname:string
+  firstname:string
   lastname:string
   email:string
   phone:string
@@ -22,8 +32,10 @@ const Hero = () => {
     const fetchRecords = async ()=>{
       try{
         const response = await axios.get("http://localhost:3000/api/records")
-        setRecords(response.data.data)
-        console.log(response.data)
+        const data = response.data
+        const responseArray = Array.isArray(data) ? data :[data]
+        setRecords(responseArray[0].data)
+        console.log(responseArray[0].data)
       }catch(err){
         console.error(err)
       }
@@ -35,11 +47,7 @@ const Hero = () => {
     <div className="py-24 px-16 h-screen">
       <div className="flex justify-between mb-24">
         <h1 className="text-[#013C61] text-3xl font-semibold">Employees</h1>
-        <button
-          className="bg-[#2BDA53] text-center px-10 py-2 text-white rounded hover:bg-green-600 transition-colors"
-        >
-          Add New
-        </button>
+        <AddNewDialog/>
       </div>
 
       <div className="bg-white flex justify-between px-8 py-10 mb-12 rounded-lg shadow">
@@ -69,7 +77,7 @@ const Hero = () => {
         </div>
       </div>
       
-      <div>
+      <div className="mt-10">
       <Table.Root>
 	<Table.Header>
 		<Table.Row>
@@ -85,25 +93,25 @@ const Hero = () => {
 	</Table.Header>
 
 	<Table.Body>
-    {records.map((record)=>(
-		<Table.Row key={record._id}>
-			<Table.RowHeaderCell>{record.firsname}</Table.RowHeaderCell>
+    {records.map((record,index)=>(
+		<Table.Row key={record._id || index}>
+			<Table.RowHeaderCell>{record.firstname}</Table.RowHeaderCell>
 			<Table.Cell>{record.lastname}</Table.Cell>
 			<Table.Cell>{record.email}</Table.Cell>
 			<Table.Cell>{record.phone}</Table.Cell>
 			<Table.Cell>{record.role}</Table.Cell>
-			<Table.Cell>
-        <FaRegTrashAlt /> 
-        <FaPen />
-        </Table.Cell>
-      
-		</Table.Row>
+			<Table.Cell className="flex gap-5">
+        <FaRegTrashAlt className="cursor-pointer"/> 
+        <FaPen className="cursor-pointer"/>
+    </Table.Cell>
+      </Table.Row>
 
     ))}
 	</Table.Body>
 </Table.Root>
-
-      </div>
+  
+  </div>
+  
 
 </div>
      
