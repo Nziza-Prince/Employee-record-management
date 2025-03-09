@@ -4,10 +4,6 @@ import { LuUser } from "react-icons/lu";
 import { MdAlternateEmail } from "react-icons/md";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 
 const Page = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -58,7 +54,7 @@ const Page = () => {
             <div className="w-1/2">
               <label className="block text-gray-700">Last Name</label>
               <div className="flex border-b border-gray-300">
-                <input
+                <input  
                   type="text"
                   className="w-full p-2 focus:outline-none"
                 
