@@ -4,6 +4,10 @@ import { LuUser } from "react-icons/lu";
 import { MdAlternateEmail } from "react-icons/md";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import Link from "next/link";
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { userSchema, UserSchema } from "@/utils/validation/userSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import User from "../models/user";
 
 const Page = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,6 +16,15 @@ const Page = () => {
     setShowPassword(!showPassword);
   };
 
+  const form = useForm<UserSchema>({
+    resolver:zodResolver(userSchema)
+  })
+
+  const {register,handleSubmit,setValue,reset,formState:{errors,isSubmitting}} = form
+
+  const onSubmitForm:SubmitHandler<UserSchema> = async (data:UserSchema)=>{
+    console.log(data)
+  }
 
   return (
     <div className="flex h-screen">
@@ -37,7 +50,7 @@ const Page = () => {
         </p>
 
         {/* Form */}
-        <form  className="shadow-md p-10 mt-6 w-full max-w-md">
+        <form  onSubmit={handleSubmit(onSubmitForm)} className="shadow-md p-10 mt-6 w-full max-w-md">
           <div className="flex gap-10">
             <div className="w-1/2">
               <label className="block text-gray-700">First Name</label>
@@ -45,10 +58,11 @@ const Page = () => {
                 <input
                   type="text"
                   className="w-full p-2 focus:outline-none"
-                  
+                  {...register('firstname')}
                 />
                 <LuUser className="mt-3" />
               </div>
+              <p className="text-red-600">{errors.firstname && errors.firstname.message}</p>
         
             </div>
             <div className="w-1/2">
@@ -57,11 +71,11 @@ const Page = () => {
                 <input  
                   type="text"
                   className="w-full p-2 focus:outline-none"
-                
+                {...register('lastname')}
                 />
                 <LuUser className="mt-3" />
               </div>
-      
+               <p className="text-red-600">{errors.lastname && errors.lastname.message}</p>
             </div>
           </div>
           <div className="mt-4">
@@ -70,10 +84,11 @@ const Page = () => {
               <input
                 type="text"
                 className="h-10 indent-0 w-full p-2 focus:outline-none"
-             
+             {...register('email')}
               />
               <MdAlternateEmail className="mt-3" />
             </div>
+            <p className="text-red-600">{errors.email && errors.email.message}</p>
           </div>
           <div className="mt-4">
             <label className="block text-gray-700">Password</label>
@@ -81,7 +96,7 @@ const Page = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 className="h-10 w-full p-2 focus:outline-none"
-                
+                {...register('password')}
               />
               <button
                 onClick={togglePasswordVisibility}
@@ -97,9 +112,10 @@ const Page = () => {
             </div>
        
           </div>
+          <p className="text-red-600">{errors.password && errors.password.message}</p>
           <button
             type="submit"
-            className="w-full mt-6 bg-green-500 text-white p-3 rounded-md hover:bg-green-600 transition"
+            className="cursor-pointer w-full mt-6 bg-green-500 text-white p-3 rounded-md hover:bg-green-600 transition"
           >
             Continue
           </button>
