@@ -58,6 +58,7 @@ const handler = NextAuth({
             if(user){
                 token.id = user.id
                 token.email=user.email
+                token.name = user.name
             }
             return token
         },
@@ -72,7 +73,7 @@ const handler = NextAuth({
         }
       },
       pages:{
-        signIn:"../../../login"
+        signIn:"/login"
       },
       secret:process.env.NEXTAUTH_SECRET
 })
