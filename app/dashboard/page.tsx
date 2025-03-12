@@ -3,13 +3,11 @@ import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import Hero from './Hero';
 
-
-
-export default async function Dashboard() {
+export default function Dashboard() {
   return (
     <div className="bg-gray-100 flex flex-col h-screen">
-      <Navbar />
-      <div className="flex flex-1">
+     <Navbar />
+       <div className="flex flex-1">
         <Sidebar />
         <div className="flex-1 p-4">
          <Hero/>

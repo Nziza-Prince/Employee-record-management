@@ -43,7 +43,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
   try {
     const deleteRecord = await Record.findByIdAndDelete(params.id);
 
-    return NextResponse.json({ success: true, data: deleteRecord });
+    return NextResponse.json({ success: true, message: "DELETED Successfully" });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 400 });
   }

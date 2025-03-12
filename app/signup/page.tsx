@@ -33,7 +33,7 @@ const Page = () => {
       router.push("/login"); // Redirect to login page after success
     } catch (err: any) {
       console.error("Signup error:", err);
-      setError(err.response?.data?.message || "Something went wrong during signup."); // Display error to user
+      setError(err.response.data.error || "Something went wrong during signup."); // Display error to user
     }
   };
 
