@@ -1,6 +1,6 @@
 import mongoose, { Mongoose } from 'mongoose';
 
-const MONGODB_URI: string = "mongodb://localhost:27017/record-manage-ment";
+const MONGODB_URI: string = process.env.DATABASE_URL|| "mongodb://localhost:27017/record-manage-ment";
 
 interface Cached {
   conn: Mongoose | null;

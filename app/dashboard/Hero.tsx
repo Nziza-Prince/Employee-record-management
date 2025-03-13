@@ -21,11 +21,11 @@ const Hero = () => {
   const [filteredRecords, setFilteredRecords] = useState<Record[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteLoading, setDeleteLoading] = useState(false);
-
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
   useEffect(() => {
     const fetchRecords = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/records");
+        const response = await axios.get(`${backendUrl}/records`);
         const data = response.data;
         const responseArray = Array.isArray(data) ? data : [data];
         setRecords(responseArray[0].data);

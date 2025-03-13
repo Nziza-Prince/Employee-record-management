@@ -14,6 +14,7 @@ const Page = () => {
   const router = useRouter(); // Added router
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(""); // Added error state
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -28,7 +29,7 @@ const Page = () => {
   const onSubmitForm: SubmitHandler<UserSchema> = async (data: UserSchema) => {
     try {
       setError(""); // Clear previous errors
-      const response = await axios.post("http://localhost:3000/api/auth/signup", data); // Pass form data
+      const response = await axios.post(`${backendUrl}/auth/signup`, data); // Pass form data
       console.log("Signup successful:", response.data);
       router.push("/login"); // Redirect to login page after success
     } catch (err: any) {

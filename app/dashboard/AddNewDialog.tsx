@@ -18,6 +18,7 @@ import { useState } from "react";
 export function AddNewDialog({setRecords}:{setRecords:Function}) {
 const [open,setOpen] = useState(false)
 const [emailError,setEmailError] = useState(null)
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
 
   const form = useForm<RecordSchema>({
     resolver: zodResolver(recordSchema),
@@ -39,7 +40,7 @@ const [emailError,setEmailError] = useState(null)
   ) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/records",
+        `${backendUrl}/records`,
         data
       );
       if (!response) {

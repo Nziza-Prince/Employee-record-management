@@ -33,6 +33,8 @@ interface Record{
   const [open,setOpen] = useState(false)
   const [emailError,setEmailError] = useState(null)
   const [recordToUpdate,setRecordToUpdate] = useState<RecordSchema>(Object)
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const form = useForm<RecordSchema>({
       resolver: zodResolver(recordSchema),
       defaultValues: { role: "STAFF" },
@@ -50,7 +52,7 @@ interface Record{
         if (open) {
           const fetchRecord = async () => {
             try {
-              const response = await axios.get(`http://localhost:3000/api/records/${id}`);
+              const response = await axios.get(`${backendUrl}/records/${id}`);
               const record = response.data.data;
               setRecordToUpdate(record);
     
@@ -74,7 +76,7 @@ interface Record{
     ) => {
       try {
         const response = await axios.put(
-          `http://localhost:3000/api/records/${id}`,
+          `${backendUrl}/records/${id}`,
           data
         );
         if (!response) {
