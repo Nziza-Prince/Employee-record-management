@@ -69,7 +69,7 @@ interface Record{
     
           fetchRecord();
         }
-      }, [open, id, setValue]);
+      }, [open, id, setValue,backendUrl]);
 
     const onSubmitForm: SubmitHandler<RecordSchema> = async (
       data: RecordSchema

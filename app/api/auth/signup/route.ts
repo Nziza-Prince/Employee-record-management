@@ -1,8 +1,7 @@
 import dbConnect from "@/app/lib/mongodb";
 import User from "@/app/models/user";
 import bcrypt from "bcryptjs";
-import { error } from "console";
-import { NextRequest, NextResponse, userAgent } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 
 export async function POST(req:NextRequest){

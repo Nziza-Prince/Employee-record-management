@@ -7,7 +7,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@radix-ui/themes";
 import { Label } from "@radix-ui/themes/components/context-menu";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { recordSchema, RecordSchema } from "../../utils/validation/form";
@@ -28,7 +27,6 @@ const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
   const {
     register,
     handleSubmit,
-    setValue,
     reset,
     formState: { errors, isSubmitting },
   } = form;

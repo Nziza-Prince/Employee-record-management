@@ -36,7 +36,7 @@ const Hero = () => {
     };
 
     fetchRecords();
-  }, []);
+  }, [backendUrl]);
 
   const handleDeleteSuccess = (deletedId: string) => {
     setRecords((prevRecords) => prevRecords.filter((record) => record._id !== deletedId));

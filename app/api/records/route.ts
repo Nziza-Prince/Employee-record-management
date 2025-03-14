@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '../../lib/mongodb';
 import Record from '../../models/Record';
+import { RecordSchema } from '@/utils/validation/form';
 
 export async function GET(req: NextRequest) {
   await dbConnect();
@@ -15,7 +16,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   await dbConnect();
   try {
-    const body = await req.json();
+    const body:RecordSchema = await req.json();
 
     const existingUser = await Record.findOne({email:body.email})
     

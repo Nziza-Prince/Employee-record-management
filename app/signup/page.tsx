@@ -9,6 +9,7 @@ import { userSchema, UserSchema } from "@/utils/validation/userSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useRouter } from "next/navigation"; // Added for navigation
+import Image from "next/image";
 
 const Page = () => {
   const router = useRouter(); // Added router
@@ -42,7 +43,7 @@ const Page = () => {
     <div className="flex h-screen">
       {/* Left Image Section */}
       <div className="w-1/2 relative flex items-center justify-center bg-gray-100">
-        <img src="/Model.svg" alt="Model" className="w-full h-full object-cover" />
+        <Image src="/Model.svg" alt="Model" className="w-full h-full object-cover" />
         <div className="absolute bottom-10 left-10 text-white">
           <h2 className="text-xl font-semibold">No Hazzles</h2>
           <p className="text-sm">
