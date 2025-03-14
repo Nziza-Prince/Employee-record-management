@@ -8,7 +8,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, LoginSchema } from "@/utils/validation/userSchema";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-import Image from "next/image";
 
 const Page = () => {
   const router = useRouter();
@@ -50,7 +49,7 @@ const Page = () => {
     <div className="flex h-screen">
       {/* Left Image Section */}
       <div className="w-1/2 relative flex items-center justify-center bg-gray-100">
-        <Image src="/Model.svg" alt="Model" className="w-full h-full object-cover" />
+        <img src="/Model.svg" alt="Model" className="w-full h-full object-cover" />
         <div className="absolute bottom-10 left-10 text-white">
           <h2 className="text-xl font-semibold">No Hazzles</h2>
           <p className="text-sm">
