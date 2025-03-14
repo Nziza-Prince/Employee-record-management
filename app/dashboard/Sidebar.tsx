@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 import { PiUser} from "react-icons/pi";
@@ -7,13 +8,13 @@ const Sidebar = () => {
       <nav>
         <ul className="space-y-2">
           <li>
-            <img src="/Icon.svg" className="p-2 rounded cursor-pointer hover:bg-gray-200" alt="Icon" />
+            <Image width={100} height={100} src="/Icon.svg" className="p-2 rounded cursor-pointer hover:bg-gray-200" alt="Icon" />
           </li>
           <li>
             <PiUser/>
           </li>
           <li>
-            <img src="/cards.svg" className="p-2 rounded cursor-pointer hover:bg-gray-200" alt="Cards" />
+            <Image width={100} height={100} src="/cards.svg" className="p-2 rounded cursor-pointer hover:bg-gray-200" alt="Cards" />
           </li>
         </ul>
       </nav>
