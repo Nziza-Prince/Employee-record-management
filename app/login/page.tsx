@@ -26,26 +26,9 @@ const Page = () => {
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = form;
 
-  const onSubmitForm: SubmitHandler<LoginSchema> = async (data: LoginSchema) => {
-    try {
-      setError("");
-      const result = await signIn("credentials", {
-        email: data.email,
-        password: data.password,
-        redirect: false,
-      });
-
-      if (result?.error) {
-        setError(result.error); // Display NextAuth-specific error
-      } else {
-        router.push("/dashboard");
-      }
-    } catch (error: any) {
-      console.error("Login error:", error);
-      setError("An unexpected error occurred. Please try again."); // Generic fallback error
-    }
-  };
-
+ const onSubmitForm = async ()=>{
+  router.push("/dashboard")
+ }
   return (
     <div className="flex h-screen">
       {/* Left Image Section */}
