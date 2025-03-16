@@ -47,14 +47,17 @@ const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
       }
       setRecords((prevRecords: RecordSchema[]) => [...prevRecords,response.data.data,]);
       setOpen(false)
-      reset()
       setEmailError(null)
+      reset()
       toast.success("Added a new Record")
     } catch (error:any) {
       if(error.response && error.response.status===400 && error.response.data.error === "Record Already exists"){
        setEmailError(error.response.data.error)
       }
       console.error(error);
+    }
+    finally{
+      reset()
     }
   };
   return (
@@ -72,6 +75,9 @@ const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
           </DialogDescription>
         </DialogHeader>
         <form className="grid gap-4 py-4" onSubmit={handleSubmit(onSubmitForm)}>
+        <p className="text-red-600">
+              {emailError && emailError}
+            </p>
           <div className="flex flex-col">
             <Label className="text-right">First Name</Label>
             <input
@@ -106,9 +112,7 @@ const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
             <p className="text-red-600">
               {errors.email && errors.email.message}
             </p>
-            <p className="text-red-600">
-              {emailError && emailError}
-            </p>
+     
           </div>
           <div className="flex flex-col">
             <Label className="text-right">Phone</Label>

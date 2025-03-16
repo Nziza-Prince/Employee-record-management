@@ -15,6 +15,7 @@ import {
   import axios from "axios";
   import { useEffect, useState } from "react";
   import { FaPen } from "react-icons/fa";
+import { toast } from "sonner";
   
 interface Props{
     id:string
@@ -62,6 +63,7 @@ interface Record{
               setValue("email", record.email);
               setValue("phone", record.phone);
               setValue("role", record.role);
+              
             } catch (error) {
               console.error("Error fetching record:", error);
             }
@@ -90,6 +92,7 @@ interface Record{
         setOpen(false)
         reset()
         setEmailError(null)
+        toast.success("Record Updated successfully")
       } catch (error:any) {
         if(error.response && error.response.status===400 && error.response.data.error === "Record Already exists"){
          setEmailError(error.response.data.error)
@@ -110,6 +113,9 @@ interface Record{
             </DialogDescription>
           </DialogHeader>
           <form className="grid gap-4 py-4" onSubmit={handleSubmit(onSubmitForm)}>
+          <p className="text-red-600">
+                {emailError && emailError}
+              </p>
             <div className="flex flex-col">
               <Label className="text-right">First Name</Label>
               <input
@@ -145,9 +151,7 @@ interface Record{
               <p className="text-red-600">
                 {errors.email && errors.email.message}
               </p>
-              <p className="text-red-600">
-                {emailError && emailError}
-              </p>
+  
             </div>
             <div className="flex flex-col">
               <Label className="text-right">Phone</Label>
