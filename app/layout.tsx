@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
+import { Toaster } from "sonner";
 
 
 const geistSans = Geist({
@@ -33,6 +34,7 @@ export default function RootLayout({
 
         {children}
           </Theme>
+          <Toaster/>
       </body>
     </html>
   );
