@@ -13,6 +13,7 @@ import { recordSchema, RecordSchema } from "../../utils/validation/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export function AddNewDialog({setRecords}:{setRecords:Function}) {
 const [open,setOpen] = useState(false)
@@ -48,6 +49,7 @@ const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
       setOpen(false)
       reset()
       setEmailError(null)
+      toast.success("Added a new Record")
     } catch (error:any) {
       if(error.response && error.response.status===400 && error.response.data.error === "Record Already exists"){
        setEmailError(error.response.data.error)
