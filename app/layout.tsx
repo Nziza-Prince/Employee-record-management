@@ -4,6 +4,8 @@ import "./globals.css";
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
 import { Toaster } from "sonner";
+import { Providers } from './providers';
+import type { AppProps } from 'next/app';
 
 
 const geistSans = Geist({
@@ -23,18 +25,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Providers>
           <Theme>
-
-        {children}
+            {children}
           </Theme>
-          <Toaster/>
+        </Providers>
+        <Toaster/>
       </body>
     </html>
   );

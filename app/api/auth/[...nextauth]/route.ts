@@ -26,7 +26,7 @@ const handler = NextAuth({
                password:{label:"Password",type:"password",placeholder:"Password"}
            },
             async authorize(credentials) {
-               if(!credentials?.email || credentials?.password){
+               if(!credentials?.email || !credentials?.password){
                 throw new Error("Please provide both email and password")
                }
                try{
@@ -38,16 +38,16 @@ const handler = NextAuth({
                     }
                 const passwordMatch = await bcrypt.compare(credentials.password,user.password)
                 if(!passwordMatch){
-                    throw new Error("Invalid passwod")
+                    throw new Error("Invalid password")
                 }
                 return {
                     id:user._id.toString(),
                     email:user.email,
                     name:`${user.firstname} ${user.lastname}`
                 }
-               }catch(err){
+               }catch(err:any){
                 console.log("Error:",err)
-                throw new Error("Authentiaction failed")
+                throw new Error(err.message)
 
                }
             }
@@ -76,7 +76,7 @@ const handler = NextAuth({
       pages:{
         signIn:"/login"
       },
-      secret:process.env.NEXTAUTH_SECRET
+      secret:process.env.NEXT_AUTH_SECRET
 })
 
 export {handler as GET,handler as POST}

@@ -2,9 +2,12 @@ import React from 'react';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import Hero from './Hero';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 export default function Dashboard() {
   return (
+    <ProtectedRoute>
+
     <div className="bg-gray-100 flex flex-col h-screen">
      <Navbar />
        <div className="flex flex-1">
@@ -14,5 +17,6 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
+    </ProtectedRoute>
   );
 }

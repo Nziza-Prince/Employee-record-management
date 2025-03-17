@@ -26,9 +26,24 @@ const Page = () => {
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = form;
 
- const onSubmitForm = async ()=>{
-  router.push("/dashboard")
- }
+ const onSubmitForm: SubmitHandler<LoginSchema> = async (data) => {
+  try {
+    const result = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    });
+    
+    if (result?.error) {
+      setError(result.error);
+    } else {
+      router.push("/dashboard");
+    }
+  } catch (error) {
+    setError("An unexpected error occurred");
+    console.error(error);
+  }
+ };
   return (
     <div className="flex h-screen">
       {/* Left Image Section */}
@@ -46,7 +61,7 @@ const Page = () => {
       <div className="w-1/2 flex flex-col justify-center items-center px-16 bg-gray-10">
         <h1 className="text-left text-2xl font-bold">Login into your account</h1>
         <p className="mt-2 text-gray-600 text-left">
-          Don’t have an account?{" "}
+          Don't have an account?{" "}
           <span className="text-green-500 cursor-pointer">
             <Link href="/signup">Signup</Link>
           </span>
