@@ -93,7 +93,10 @@ const Hero = () => {
           </Table.Header>
 
           <Table.Body>
-            {filteredRecords.map((record) => (
+            {
+              filteredRecords.length > 0 ?(
+
+            filteredRecords.map((record) => (
               <Table.Row key={record._id}>
                 <Table.RowHeaderCell>{record.firstname}</Table.RowHeaderCell>
                 <Table.Cell>{record.lastname}</Table.Cell>
@@ -105,7 +108,13 @@ const Hero = () => {
                   <UpdateComponent setRecords={setRecords} id={record._id} />
                 </Table.Cell>
               </Table.Row>
-            ))}
+              )
+            )):
+            <Table.Row>
+              <Table.Cell colSpan={6} className="text-center py-4 font-bold">
+                No records found
+              </Table.Cell>
+              </Table.Row>}
           </Table.Body>
         </Table.Root>
       </div>
