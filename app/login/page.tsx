@@ -27,6 +27,7 @@ const Page = () => {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = form;
 
  const onSubmitForm: SubmitHandler<LoginSchema> = async (data) => {
+  
   try {
     const result = await signIn("credentials", {
       email: data.email,
@@ -128,4 +129,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Page; 
