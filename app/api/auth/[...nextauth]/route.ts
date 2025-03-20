@@ -43,7 +43,7 @@ const handler = NextAuth({
                 return {
                     id:user._id.toString(),
                     email:user.email,
-                    name:`${user.firstname} ${user.lastname}`
+                    name:`${user.firstname}`
                 }
                }catch(err:any){
                 console.log("Error:",err)
