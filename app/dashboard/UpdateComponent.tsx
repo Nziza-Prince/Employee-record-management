@@ -38,7 +38,6 @@ interface Record{
 
     const form = useForm<RecordSchema>({
       resolver: zodResolver(recordSchema),
-      defaultValues: { role: "STAFF" },
     });
   
     const {
